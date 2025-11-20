@@ -1,15 +1,4 @@
 {
-  "expo": {
-    "name": "Nidal Watfa",
-    "slug": "nidal-watfa-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    }
-  }
+  "name": "ArabicAcademy",
+  "displayName": "أكاديمية العربي"
 }
