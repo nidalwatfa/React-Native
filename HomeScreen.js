@@ -1,58 +1,122 @@
 
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from './UserContext';
 
-export default function HomeScreen({navigation}) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>مرحباً بك في أكاديمية العربي 🇵🇸</Text>
-      <Text style={styles.subtitle}>اختر أي خيار:</Text>
+const HomeScreen = ({ navigation }) => {
+    const { userData, setUserData } = useContext(UserContext);
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Details')}>
-        <Text style={styles.buttonText}>عرض التفاصيل</Text>
-      </TouchableOpacity>
+    useEffect(() => {
+        const loadUserData = async () => {
+            try {
+                const storedData = await AsyncStorage.getItem('userData');
+                if (storedData) {
+                    setUserData(JSON.parse(storedData));
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        };
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Add')}>
-        <Text style={styles.buttonText}>إضافة درس جديد</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
+        loadUserData();
+    }, []);
+
+    const handleDelete = async (id) => {
+        const updatedData = userData.filter(item => item.id !== id);
+        setUserData(updatedData);
+        await AsyncStorage.setItem('userData', JSON.stringify(updatedData));
+    };
+
+    const renderItem = ({ item }) => (
+        <View style={styles.itemContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('Details', { item })}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.description}>{item.description}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
+                <Text style={styles.deleteButtonText}>حذف</Text>
+            </TouchableOpacity>
+        </View>
+    );
+
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={userData}
+                renderItem={renderItem}
+                keyExtractor={item => item.id.toString()}
+                ListEmptyComponent={<Text style={styles.emptyText}>لا توجد بيانات بعد. اضف شيئًا جديدًا!</Text>}
+            />
+            <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => navigation.navigate('Add')}
+            >
+                <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    padding: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#2c3e50',
-  },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 40,
-    color: '#7f8c8d',
-  },
-  button: {
-    backgroundColor: '#3498db',
-    padding: 15,
-    borderRadius: 10,
-    width: '80%',
-    alignItems: 'center',
-    marginTop: 15,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+    container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: '#f8f8f8',
+    },
+    itemContainer: {
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 8,
+        marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderLeftWidth: 5,
+        borderLeftColor: '#4CAF50',
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    description: {
+        fontSize: 14,
+        color: '#666',
+        marginTop: 5,
+    },
+    deleteButton: {
+        backgroundColor: '#FF6347',
+        padding: 8,
+        borderRadius: 5,
+    },
+    deleteButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+    addButton: {
+        position: 'absolute',
+        bottom: 30,
+        right: 30,
+        backgroundColor: '#007BFF',
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+    },
+    addButtonText: {
+        color: '#fff',
+        fontSize: 30,
+        lineHeight: 32,
+    },
+    emptyText: {
+        textAlign: 'center',
+        marginTop: 50,
+        fontSize: 16,
+        color: '#999',
+    }
 });
+
+export default HomeScreen;
