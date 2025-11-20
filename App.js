@@ -1,13 +1,35 @@
+
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+const Stack = createNativeStackNavigator();
+
+function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>أهلاً بك في أكاديمية React Native العربية 🚀</Text>
+      <Text style={styles.subtitle}>جاهز نبدأ الرحلة؟ 💜</Text>
+    </View>
+  );
+}
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.box}>
-        <Text style={styles.title}>مرحباً بالعالم!</Text>
-        <Text style={styles.subtitle}>مشروع React Native يعمل 100%</Text>
-      </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
@@ -15,21 +37,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  box: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#333',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#6a1b9a',
   },
   subtitle: {
-    fontSize: 18,
-    marginTop: 20,
-    color: '#666',
+    fontSize: 20,
+    color: '#444',
   },
 });
