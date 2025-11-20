@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# React Native
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# Android
+android/app/build/
+android/.gradle/
+android/build/
+android/local.properties
+
+# iOS
+ios/build/
+ios/Pods/
+ios/Podfile.lock
+ios/*.xcworkspace
+ios/*.xcodeproj/project.xcworkspace
+ios/*.xcodeproj/xcshareddata/
+
+# Metro
+.metro-*
+.cache
+
+# macOS
+.DS_Store
+
+# Expo / EAS (لو استخدمتها لاحقاً)
+.expo/
+.expo-shared/
+
+# Misc
+.env
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
