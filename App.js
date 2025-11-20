@@ -1,5 +1,13 @@
-// ... (الاستيرادات السابقة) ...
-import AddScreen from './AddScreen'; // أضف هذا السطر
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { UserProvider } from './UserContext'; 
+
+// استيراد الشاشات
+import HomeScreen from './HomeScreen';
+import DetailsScreen from './DetailsScreen';
+import AddScreen from './AddScreen'; // تأكد من وجود هذا السطر
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +26,6 @@ const App = () => {
             component={DetailsScreen} 
             options={{ title: 'التفاصيل' }} 
           />
-          {/* أضف شاشة الإضافة الجديدة هنا */}
           <Stack.Screen 
             name="Add" 
             component={AddScreen} 
@@ -31,4 +38,5 @@ const App = () => {
 }
 
 export default App;
+
 
