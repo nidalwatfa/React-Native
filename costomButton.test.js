@@ -1,20 +1,26 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
-import CustomButton from '../CustomButton'; // تأكد من المسار الصحيح لمكون الزر
+import { render, fireEvent } from '@testing-library/react-native';
+import CustomButton from '../CustomButton'; // تأكد من المسار
 
-// تعريف مجموعة الاختبار
-describe('CustomButton', () => {
+describe('CustomButton Interactions', () => {
 
-  // تعريف حالة الاختبار
-  it('يجب أن يعرض الزر النص الذي تم تمريره إليه', () => {
+  it('يجب أن يتم استدعاء وظيفة onPress عند الضغط على الزر', () => {
     
-    // 1. عرض المكون في بيئة الاختبار
-    const { getByText } = render(<CustomButton title="انقر هنا" />);
+    // 1. إنشاء دالة وهمية (Mock Function) لمراقبة استدعائها
+    const mockOnPress = jest.fn();
 
-    // 2. محاولة العثور على العنصر الذي يحمل النص "انقر هنا"
-    const buttonTitle = getByText('انقر هنا');
+    // 2. عرض المكون وتمرير الدالة الوهمية
+    const { getByText } = render(
+      <CustomButton title="اضغط هنا" onPress={mockOnPress} />
+    );
+    
+    // 3. العثور على الزر
+    const button = getByText('اضغط هنا');
 
-    // 3. التحقق من وجود العنصر
-    expect(buttonTitle).toBeVisible();
+    // 4. محاكاة حدث الضغط على الزر (التفاعل)
+    fireEvent.press(button);
+    
+    // 5. التحقق: يجب أن تكون الدالة الوهمية قد استُدعيت مرة واحدة بالضبط
+    expect(mockOnPress).toHaveBeenCalledTimes(1); 
   });
 });
