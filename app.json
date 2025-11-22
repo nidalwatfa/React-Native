@@ -1,4 +1,8 @@
+
 {
-  "name": "ArabicAcademy",
-  "displayName": "أكاديمية العربي"
+  "expo": {
+    "extra": {
+      "supportsRTL": true
+    }
+  }
 }
