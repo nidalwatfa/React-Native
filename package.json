@@ -1,26 +1,25 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import CustomButton from '../CustomButton'; // تأكد من المسار
-
-describe('CustomButton Interactions', () => {
-
-  it('يجب أن يتم استدعاء وظيفة onPress عند الضغط على الزر', () => {
-    
-    // 1. إنشاء دالة وهمية (Mock Function) لمراقبة استدعائها
-    const mockOnPress = jest.fn();
-
-    // 2. عرض المكون وتمرير الدالة الوهمية
-    const { getByText } = render(
-      <CustomButton title="اضغط هنا" onPress={mockOnPress} />
-    );
-    
-    // 3. العثور على الزر
-    const button = getByText('اضغط هنا');
-
-    // 4. محاكاة حدث الضغط على الزر (التفاعل)
-    fireEvent.press(button);
-    
-    // 5. التحقق: يجب أن تكون الدالة الوهمية قد استُدعيت مرة واحدة بالضبط
-    expect(mockOnPress).toHaveBeenCalledTimes(1); 
-  });
-});
+{
+  "name": "react-native",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~50.0.0",
+    "expo-status-bar": "~1.11.1",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native-stack": "^6.9.17",
+    "react-native-screens": "~3.29.0",
+    "react-native-safe-area-context": "4.8.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
