@@ -1,10 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>مرحبًا بك في الشاشة الرئيسية 🎉</Text>
+      <Button
+        title="اذهب إلى الملف الشخصي"
+        onPress={() => navigation.navigate("Profile")}
+      />
     </View>
   );
 }
@@ -17,6 +24,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginBottom: 20
   }
 });
