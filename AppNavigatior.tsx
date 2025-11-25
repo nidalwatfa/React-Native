@@ -8,6 +8,7 @@ import ContactScreen from "../screens/ContactScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +17,7 @@ export default function AppNavigator() {
     <Drawer.Navigator>
       <Drawer.Screen name="Login" component={LoginScreen} />
       <Drawer.Screen name="Register" component={RegisterScreen} />
+      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
       <Drawer.Screen name="Dashboard" component={DashboardScreen} />
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
