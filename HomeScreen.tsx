@@ -1,12 +1,15 @@
+
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
+      <Icon name="home" size={50} color="#4CAF50" />
       <Text style={styles.text}>مرحبًا بك في الشاشة الرئيسية 🎉</Text>
       <Button
         title="اذهب إلى الملف الشخصي"
@@ -25,6 +28,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 20
+    marginVertical: 20
   }
 });
