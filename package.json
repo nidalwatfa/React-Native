@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "expo": "^52.0.0",
@@ -26,12 +27,18 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "jest": "^29.0.0",
+    "@testing-library/react-native": "^12.0.0",
+    "react-test-renderer": "18.2.0",
     "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.0.0",
-    "eslint-plugin-react-native": "^4.0.0"
+    "eslint-plugin-react-native": "^4.0.0",
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.76.0",
+    "@types/jest": "^29.0.0"
   },
   "private": true,
   "author": "Your Name",
   "license": "MIT",
-  "description": "React Native project using Expo with navigation and UI libraries"
+  "description": "React Native project using Expo with navigation, UI libraries, TypeScript, and testing support"
 }
