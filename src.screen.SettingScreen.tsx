@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { View, Text, Switch, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -13,7 +14,7 @@ export default function SettingsScreen() {
       <Text style={globalStyles.title}>الإعدادات ⚙️</Text>
 
       <View style={styles.option}>
-        <Text style={styles.label}>الوضع الليلي</Text>
+        <Text style={styles.label}>وضع الظلام</Text>
         <Switch
           value={darkMode}
           onValueChange={setDarkMode}
