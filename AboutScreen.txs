@@ -1,0 +1,27 @@
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { globalStyles, colors } from "../styles";
+
+export default function AboutScreen() {
+  return (
+    <View style={globalStyles.container}>
+      <Icon name="info" size={50} color={colors.secondary} />
+      <Text style={globalStyles.title}>حول التطبيق ℹ️</Text>
+      <Text style={styles.text}>اسم التطبيق: React Native Demo</Text>
+      <Text style={styles.text}>الإصدار: 1.0.0</Text>
+      <Text style={styles.text}>
+        هذا التطبيق تجريبي لتعلم أساسيات React Native مع Expo والتنقل.
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 16,
+    color: colors.text,
+    marginVertical: 5,
+    textAlign: "center"
+  }
+});
