@@ -9,6 +9,7 @@ import DashboardScreen from "../screens/DashboardScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import LogoutScreen from "../screens/LogoutScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -24,6 +25,7 @@ export default function AppNavigator() {
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
       <Drawer.Screen name="Contact" component={ContactScreen} />
+      <Drawer.Screen name="Logout" component={LogoutScreen} />
     </Drawer.Navigator>
   );
 }
