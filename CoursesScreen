@@ -1,0 +1,36 @@
+// 📚 2. شاشة الدورات (CoursesScreen)
+function CoursesScreen({ navigation }) {
+  
+  // دالة RenderItem: تحدد شكل عنصر واحد في القائمة
+  const renderCourseItem = ({ item }) => (
+    <TouchableOpacity 
+      style={styles.courseCard}
+      // 💡 عند الضغط، ننتقل إلى شاشة تفاصيل الدورة (سنبنيها لاحقاً)
+      onPress={() => navigation.navigate('CourseDetails', { course: item })}
+    >
+      <View style={styles.cardHeader}>
+        <Text style={styles.courseIcon}>{item.icon}</Text>
+        <View>
+          <Text style={styles.courseTitle}>{item.title}</Text>
+          <Text style={styles.courseDetail}>المدرب: {item.instructor}</Text>
+        </View>
+      </View>
+      <Text style={styles.courseDetailFooter}>المدة: {item.duration}</Text>
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={styles.screenContainer}>
+      <Text style={styles.subHeaderText}>اختر الدورة التي تناسبك:</Text>
+      
+      {/* 💡 هذا هو المكون الديناميكي الجديد */}
+      <FlatList
+        data={COURSES_DATA} // مصفوفة البيانات التي أنشأناها
+        renderItem={renderCourseItem} // وظيفة عرض كل عنصر
+        keyExtractor={item => item.id} // مفتاح فريد لكل عنصر
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
+  );
+}
