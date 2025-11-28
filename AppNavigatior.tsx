@@ -1,31 +1,49 @@
-import React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import SettingsScreen from "../screens/SettingsScreen";
-import AboutScreen from "../screens/AboutScreen";
-import ContactScreen from "../screens/ContactScreen";
-import DashboardScreen from "../screens/DashboardScreen";
-import LoginScreen from "../screens/LoginScreen";
-import RegisterScreen from "../screens/RegisterScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import LogoutScreen from "../screens/LogoutScreen";
+import React from 'react';
+// استيراد حزم التنقل
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Drawer = createDrawerNavigator();
+// استيراد الشاشات التي أنشأناها
+import HomeScreen from '../screens/HomeScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 
-export default function AppNavigator() {
+// 1. تعريف أنواع الشاشات والمعاملات (مهم جداً للـ TypeScript)
+type RootStackParamList = {
+  Home: undefined; // الشاشة الرئيسية
+  Details: { itemId: number }; // شاشة التفاصيل تستقبل itemId
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const AppNavigator = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Login" component={LoginScreen} />
-      <Drawer.Screen name="Register" component={RegisterScreen} />
-      <Drawer.Screen name="Welcome" component={WelcomeScreen} />
-      <Drawer.Screen name="Dashboard" component={DashboardScreen} />
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
-      <Drawer.Screen name="About" component={AboutScreen} />
-      <Drawer.Screen name="Contact" component={ContactScreen} />
-      <Drawer.Screen name="Logout" component={LogoutScreen} />
-    </Drawer.Navigator>
+    // NavigationContainer هو الحاوية الرئيسية لنظام التنقل
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home" // الشاشة التي يبدأ بها التطبيق
+        screenOptions={{
+          headerStyle: { backgroundColor: '#0056b3' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      >
+        {/* تعريف الشاشة الرئيسية */}
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'شاشتي النظيفة' }}
+        />
+        
+        {/* تعريف شاشة التفاصيل */}
+        <Stack.Screen
+          name="Details"
+          component={DetailsScreen}
+          options={{ title: 'التفاصيل' }}
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
+
+export default AppNavigator;
