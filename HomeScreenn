@@ -1,21 +1,50 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { globalStyles, colors } from "../styles";
+import React from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function HomeScreen() {
-  const navigation = useNavigation();
+// تعريف أنواع التنقل (سنستخدمها لاحقاً)
+type RootStackParamList = {
+  Home: undefined; // الشاشة الرئيسية لا تتلقى أي معاملات
+  Details: { itemId: number }; // سنضيفها في الخطوات القادمة
+};
 
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
-    <View style={globalStyles.container}>
-      <Icon name="home" size={50} color={colors.primary} />
-      <Text style={globalStyles.title}>مرحبًا بك في الشاشة الرئيسية 🎉</Text>
-      <Button
-        title="اذهب إلى الملف الشخصي"
-        color={colors.secondary}
-        onPress={() => navigation.navigate("Profile")}
-      />
+    <View style={styles.container}>
+      <Text style={styles.title}>الشاشة الرئيسية</Text>
+      <Text style={styles.subtitle}>هنا تبدأ رحلة تطبيقك النظيف.</Text>
+      <View style={{ marginTop: 20 }}>
+        {/* زر سينقلك إلى شاشة أخرى سنبنيها لاحقاً */}
+        <Button
+          title="الانتقال إلى التفاصيل"
+          onPress={() => navigation.navigate('Details', { itemId: 86 })}
+        />
+      </View>
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+  },
+});
+
+export default HomeScreen;
