@@ -2,16 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-// يجب أن يتطابق هذا التعريف مع ما هو موجود في AppNavigator.tsx
+// تعريف أنواع التنقل (يجب أن يتطابق هذا التعريف مع ما هو في AppNavigator لاحقاً)
+// التزمت هنا بتسمية "RootStackParamList" كأفضل ممارسة
 type RootStackParamList = {
-  Home: undefined;
-  Details: { itemId: number };
+  Home: undefined; // سنعرفها لاحقاً
+  Details: { itemId: number }; // هذه الشاشة تستقبل معامل باسم itemId
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 
 const DetailsScreen: React.FC<Props> = ({ route, navigation }) => {
-  // استخراج المعامل (Parameter) الذي مررناه من الشاشة الرئيسية
+  // استخراج المعامل (Parameter) الذي مررناه
+  // إذا لم يكن التنقل يعمل، قد تحتاج إلى إضافة الحزم يدوياً في Dependencies في Snack (كما ذكرنا سابقاً)
   const { itemId } = route.params;
 
   return (
@@ -57,3 +59,4 @@ const styles = StyleSheet.create({
 });
 
 export default DetailsScreen;
+
