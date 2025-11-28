@@ -1,4 +1,11 @@
-import * as React from 'react';
+import * as React from 'react';// بيانات وهمية للدورات (يمكن استبدالها لاحقاً ببيانات من خادم)
+const COURSES_DATA = [
+  { id: '1', title: 'أساسيات تطوير الويب (HTML/CSS)', instructor: 'أحمد جمال', duration: '20 ساعة', icon: '💻' },
+  { id: '2', title: 'البرمجة بلغة بايثون للمبتدئين', instructor: 'سارة خالد', duration: '35 ساعة', icon: '🐍' },
+  { id: '3', title: 'تطبيقات React Native المتقدمة', instructor: 'نضال واتفا', duration: '40 ساعة', icon: '⚛️' },
+  { id: '4', title: 'مقدمة في الذكاء الاصطناعي', instructor: 'فاطمة علي', duration: '15 ساعة', icon: '🧠' },
+];
+
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 // 💡 استيراد أدوات التنقل
 import { NavigationContainer } from '@react-navigation/native';
