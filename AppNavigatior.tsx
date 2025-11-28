@@ -1,46 +1,71 @@
 import React from 'react';
-// استيراد حزم التنقل
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// استيراد Hook السياق
+import { useUser } from '../context/UserContext'; 
 
-// استيراد الشاشات التي أنشأناها
+// استيراد جميع الشاشات
 import HomeScreen from '../screens/HomeScreen';
 import DetailsScreen from '../screens/DetailsScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
-// 1. تعريف أنواع الشاشات والمعاملات (مهم جداً للـ TypeScript)
+// 1. تعريف أنواع الشاشات والمعاملات (لن يتغير)
 type RootStackParamList = {
-  Home: undefined; // الشاشة الرئيسية
-  Details: { itemId: number }; // شاشة التفاصيل تستقبل itemId
+  Home: undefined;
+  Details: { itemId: number };
+  Login: undefined; 
+  Register: undefined; 
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
+  // 2. استخدام السياق للحصول على حالة تسجيل الدخول
+  const { isLoggedIn } = useUser();
+  
+  // 
+
   return (
-    // NavigationContainer هو الحاوية الرئيسية لنظام التنقل
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home" // الشاشة التي يبدأ بها التطبيق
+        // نزيل initialRouteName هنا لأنه سيتم تحديده لاحقاً بناءً على الشرط
         screenOptions={{
           headerStyle: { backgroundColor: '#0056b3' },
           headerTintColor: '#fff',
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
-        {/* تعريف الشاشة الرئيسية */}
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: 'شاشتي النظيفة' }}
-        />
-        
-        {/* تعريف شاشة التفاصيل */}
-        <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
-          options={{ title: 'التفاصيل' }}
-        />
-
+        {/* 3. تطبيق منطق التحكم في العرض */}
+        {isLoggedIn ? (
+          // === المجموعة الأولى: شاشات التطبيق الرئيسية (Main App Screens) ===
+          <>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ title: 'شاشتي النظيفة' }}
+            />
+            <Stack.Screen
+              name="Details"
+              component={DetailsScreen}
+              options={{ title: 'التفاصيل' }}
+            />
+          </>
+        ) : (
+          // === المجموعة الثانية: شاشات التحقق والدخول (Auth Screens) ===
+          <>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ title: 'تسجيل الدخول', headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{ title: 'تسجيل جديد', headerShown: false }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
