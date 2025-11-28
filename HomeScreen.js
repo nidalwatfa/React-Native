@@ -1,122 +1,83 @@
 
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserContext } from './UserContext';
+import React from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useUser } from '../context/UserContext'; // استيراد Hook السياق
 
-const HomeScreen = ({ navigation }) => {
-    const { userData, setUserData } = useContext(UserContext);
+// تعريف أنواع التنقل (يجب أن يتطابق مع AppNavigator.tsx)
+type RootStackParamList = {
+  Home: undefined;
+  Details: { itemId: number };
+};
 
-    useEffect(() => {
-        const loadUserData = async () => {
-            try {
-                const storedData = await AsyncStorage.getItem('userData');
-                if (storedData) {
-                    setUserData(JSON.parse(storedData));
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-            }
-        };
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-        loadUserData();
-    }, []);
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  // استخدام Hook السياق لجلب البيانات والدوال
+  const { userName, isLoggedIn, logout, login } = useUser();
 
-    const handleDelete = async (id) => {
-        const updatedData = userData.filter(item => item.id !== id);
-        setUserData(updatedData);
-        await AsyncStorage.setItem('userData', JSON.stringify(updatedData));
-    };
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>مرحباً، {userName}!</Text>
+      
+      {/* عرض حالة تسجيل الدخول */}
+      <Text style={[styles.subtitle, { color: isLoggedIn ? 'green' : 'red' }]}>
+        الحالة: {isLoggedIn ? 'مُسجّل الدخول' : 'زائر'}
+      </Text>
 
-    const renderItem = ({ item }) => (
-        <View style={styles.itemContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Details', { item })}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
-                <Text style={styles.deleteButtonText}>حذف</Text>
-            </TouchableOpacity>
-        </View>
-    );
+      <View style={styles.buttonContainer}>
+        {/* زر التنقل */}
+        <Button
+          title="الانتقال إلى التفاصيل (Item 86)"
+          onPress={() => navigation.navigate('Details', { itemId: 86 })}
+          color="#007bff"
+        />
 
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={userData}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-                ListEmptyComponent={<Text style={styles.emptyText}>لا توجد بيانات بعد. اضف شيئًا جديدًا!</Text>}
+        {/* زر تسجيل الدخول/الخروج */}
+        <View style={{ marginTop: 15 }}>
+          {isLoggedIn ? (
+            <Button
+              title="تسجيل الخروج"
+              onPress={logout}
+              color="#dc3545"
             />
-            <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => navigation.navigate('Add')}
-            >
-                <Text style={styles.addButtonText}>+</Text>
-            </TouchableOpacity>
+          ) : (
+            <Button
+              title="تسجيل الدخول (كـ محمد)"
+              onPress={() => login('محمد')}
+              color="#28a745"
+            />
+          )}
         </View>
-    );
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#f8f8f8',
-    },
-    itemContainer: {
-        backgroundColor: '#fff',
-        padding: 15,
-        borderRadius: 8,
-        marginBottom: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderLeftWidth: 5,
-        borderLeftColor: '#4CAF50',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#333',
-    },
-    description: {
-        fontSize: 14,
-        color: '#666',
-        marginTop: 5,
-    },
-    deleteButton: {
-        backgroundColor: '#FF6347',
-        padding: 8,
-        borderRadius: 5,
-    },
-    deleteButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    addButton: {
-        position: 'absolute',
-        bottom: 30,
-        right: 30,
-        backgroundColor: '#007BFF',
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        elevation: 5,
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 30,
-        lineHeight: 32,
-    },
-    emptyText: {
-        textAlign: 'center',
-        marginTop: 50,
-        fontSize: 16,
-        color: '#999',
-    }
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 20,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    maxWidth: 300,
+  }
 });
 
 export default HomeScreen;
