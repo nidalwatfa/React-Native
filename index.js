@@ -1,11 +1,9 @@
-
-import { I18nManager } from 'react-native';
 import { AppRegistry } from 'react-native';
-import App from './App';
-import { name as appName } from './app.json';
+// تأكد من أنك تستورد المكون App من مساره الصحيح (في هذا القالب، هو App.js)
+import App from './App'; 
 
-// تفعيل RTL للعربية
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
+// اسم تطبيقك (يجب أن يتطابق مع الاسم في ملف app.json)
+const appName = 'main'; 
 
+// تسجيل المكون الرئيسي
 AppRegistry.registerComponent(appName, () => App);
