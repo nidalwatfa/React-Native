@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { Card } from 'react-native-paper';
 
-// المكون الرئيسي للتطبيق
+// The main application component
 export default function App() {
   return (
     <View style={styles.container}>
@@ -16,7 +16,7 @@ export default function App() {
           subtitle="تستخدم مكونات Paper" 
         />
         <Card.Content>
-          {/* تم تطبيق التنسيق الجديد cardTitle هنا */}
+          {/* Applied the new cardTitle style here */}
           <Text style={styles.cardTitle}>هذا محتوى البطاقة بخط عريض وحجم 20.</Text> 
         </Card.Content>
       </Card>
@@ -25,7 +25,7 @@ export default function App() {
   );
 }
 
-// تعريف التنسيقات (تم إضافة وتصحيح cardTitle)
+// Defining styles (cardTitle added and corrected)
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
@@ -43,14 +43,14 @@ const styles = StyleSheet.create({
     width: '90%', 
     marginVertical: 10, 
     elevation: 4, 
-    alignSelf: 'center', // توسيط البطاقة أفقياً
+    alignSelf: 'center', // Center the card horizontally
   },
   
-  // التنسيق الذي تسبب في الخطأ وتم تصحيحه:
+  // The corrected cardTitle style:
   cardTitle: {
-    fontSize: 20, // <--- هذه هي القيمة التي كانت مفقودة!
+    fontSize: 20, 
     fontWeight: 'bold',
-    color: '#333', // تغيير اللون ليكون مرئياً
+    color: '#333', // Changed color to ensure visibility
     marginBottom: 10,
   }
 });
