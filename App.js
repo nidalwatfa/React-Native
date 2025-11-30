@@ -1,88 +1,88 @@
 
-import React, { useState } from 'react';
-import { SafeAreaView, View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
+import React from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 
-export default function App() {
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState('');
-
+const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>تطبيق تجريبي</Text>
-        
-        <Text style={styles.counter}>العدد: {count}</Text>
-        
-        <Button 
-          title="اضغط هنا +" 
-          onPress={() => {
-            setCount(count + 1);
-            Alert.alert('نجح', 'العدد الجديد: ' + (count + 1));
-          }}
-        />
-        
-        <View style={styles.spacer} />
-        
-        <TextInput
-          style={styles.input}
-          placeholder="اكتب شيئا"
-          value={text}
-          onChangeText={setText}
-        />
-        
-        <Text style={styles.display}>كتبت: {text}</Text>
-        
-        <View style={styles.spacer} />
-        
-        <Button 
-          title="مسح" 
-          color="red"
-          onPress={() => {
-            setCount(0);
-            setText('');
-          }}
-        />
+    <ScrollView style={styles.container}>
+      <View style={styles.title}>
+        <Text style={styles.titleText}>React Native</Text>
       </View>
-    </SafeAreaView>
+
+      <Text style={styles.cardTitle}>
+        محاكمة الكترونية
+      </Text>
+
+      <Text style={styles.cardTitle}>
+        تجربة ديمو أولى للمطور نضال
+      </Text>
+
+      {/* Button example 1 */}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.text}>عرض</Text>
+      </TouchableOpacity>
+      
+      {/* Button example 2 */}
+      <TouchableOpacity style={styles.buttonOutlineText}>
+        <Text style={styles.text}>عرض</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    backgroundColor: '#fff',
+    paddingTop: 40,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 30,
-  },
-  counter: {
-    fontSize: 24,
-    marginBottom: 20,
-    color: '#333',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
     padding: 10,
-    width: '100%',
-    fontSize: 18,
-    backgroundColor: 'white',
-    borderRadius: 5,
-  },
-  display: {
-    fontSize: 16,
-    marginTop: 10,
+    alignItems: 'center',
     marginBottom: 20,
-    color: '#666',
+    backgroundColor: '#16213e',
   },
-  spacer: {
-    height: 20,
-  
+  titleText: {
+    fontSize: 32,
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 10,
+  },
+  text: {
+    color: 'black',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#00ddff',
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    marginHorizontal: 20,
+    marginTop: 10,
+  },
+  buttonOutlineText: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    marginHorizontal: 20,
+    marginTop: 10,
+    borderColor: '#00ddff',
+    borderWidth: 1,
+  },
+});
+
+export default App;
