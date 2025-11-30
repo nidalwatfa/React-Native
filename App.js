@@ -1,7 +1,4 @@
 
-شكراً على الصورة! وجدت المشكلة! 🎯
-الخطأ واضح: /App.js: Unexpected token (59:14)
-المشكلة في السطر 59 - هناك خطأ في الكود العربي المترجم!
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 
@@ -88,5 +85,4 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 20,
-  },
-});
+  
