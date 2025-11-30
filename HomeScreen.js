@@ -1,83 +1,118 @@
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { useUser } from '../context/UserContext';
 
-import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useUser } from '../context/UserContext'; // استيراد Hook السياق
-
-// تعريف أنواع التنقل (يجب أن يتطابق مع AppNavigator.tsx)
-type RootStackParamList = {
-  Home: undefined;
-  Details: { itemId: number };
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
-  // استخدام Hook السياق لجلب البيانات والدوال
-  const { userName, isLoggedIn, logout, login } = useUser();
+const HomeScreen = ({ navigate }) => {
+  const { user, logout } = useUser();
+  const [count, setCount] = useState(0);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>مرحباً، {userName}!</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>الشاشة الرئيسية</Text>
       
-      {/* عرض حالة تسجيل الدخول */}
-      <Text style={[styles.subtitle, { color: isLoggedIn ? 'green' : 'red' }]}>
-        الحالة: {isLoggedIn ? 'مُسجّل الدخول' : 'زائر'}
-      </Text>
-
-      <View style={styles.buttonContainer}>
-        {/* زر التنقل */}
-        <Button
-          title="الانتقال إلى التفاصيل (Item 86)"
-          onPress={() => navigation.navigate('Details', { itemId: 86 })}
-          color="#007bff"
-        />
-
-        {/* زر تسجيل الدخول/الخروج */}
-        <View style={{ marginTop: 15 }}>
-          {isLoggedIn ? (
-            <Button
-              title="تسجيل الخروج"
-              onPress={logout}
-              color="#dc3545"
-            />
-          ) : (
-            <Button
-              title="تسجيل الدخول (كـ محمد)"
-              onPress={() => login('محمد')}
-              color="#28a745"
-            />
-          )}
-        </View>
+      <View style={styles.card}>
+        <Text style={styles.welcomeText}>مرحباً، {user?.name || 'مستخدم'}!</Text>
+        <Text style={styles.counterText}>العدد: {count}</Text>
       </View>
-    </View>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          console.log('زيادة العدد');
+          setCount(count + 1);
+        }}
+      >
+        <Text style={styles.buttonText}>زيادة العدد +</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, styles.secondaryButton]}
+        onPress={() => {
+          console.log('الذهاب للتفاصيل');
+          navigate('details');
+        }}
+      >
+        <Text style={styles.buttonText}>اذهب للتفاصيل</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, styles.dangerButton]}
+        onPress={() => {
+          console.log('تسجيل الخروج');
+          logout();
+        }}
+      >
+        <Text style={styles.buttonText}>تسجيل الخروج</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
+    flexGrow: 1,
     justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
+    marginBottom: 30,
+    color: '#2c3e50',
   },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 20,
-    fontWeight: '600',
+  card: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 15,
+    marginBottom: 30,
+    width: '100%',
+    maxWidth: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  welcomeText: {
+    fontSize: 20,
+    marginBottom: 10,
+    color: '#34495e',
     textAlign: 'center',
   },
-  buttonContainer: {
+  counterText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#3498db',
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#3498db',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 10,
+    marginVertical: 8,
     width: '100%',
-    maxWidth: 300,
-  }
+    maxWidth: 400,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  secondaryButton: {
+    backgroundColor: '#2ecc71',
+  },
+  dangerButton: {
+    backgroundColor: '#e74c3c',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+  },
 });
 
 export default HomeScreen;
