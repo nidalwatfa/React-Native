@@ -1,4 +1,7 @@
 
+شكراً على الصورة! وجدت المشكلة! 🎯
+الخطأ واضح: /App.js: Unexpected token (59:14)
+المشكلة في السطر 59 - هناك خطأ في الكود العربي المترجم!
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 
@@ -17,7 +20,7 @@ export default function App() {
           title="اضغط هنا +" 
           onPress={() => {
             setCount(count + 1);
-            Alert.alert('نجح!', 'العدد: ' + (count + 1));
+            Alert.alert('نجح', 'العدد الجديد: ' + (count + 1));
           }}
         />
         
@@ -25,7 +28,7 @@ export default function App() {
         
         <TextInput
           style={styles.input}
-          placeholder="اكتب شيئاً"
+          placeholder="اكتب شيئا"
           value={text}
           onChangeText={setText}
         />
@@ -35,7 +38,7 @@ export default function App() {
         <View style={styles.spacer} />
         
         <Button 
-          title="مسح الكل" 
+          title="مسح" 
           color="red"
           onPress={() => {
             setCount(0);
